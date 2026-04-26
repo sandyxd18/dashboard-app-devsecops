@@ -6,18 +6,20 @@ export default function Overview() {
   const [stats, setStats] = useState({ users: '-', books: '-', payments: '-' });
 
   useEffect(() => {
-    // Quick fetch to give dashboard some life
-    Promise.allSettled([
-      authApi.get('/auth/admin/users'),
-      bookApi.get('/books'),
-      paymentApi.get('/payments')
-    ]).then(([usersRes, booksRes, paymentsRes]) => {
-      setStats({
-        users: usersRes.status === 'fulfilled' ? usersRes.value.data.data.length : 'Error',
-        books: booksRes.status === 'fulfilled' ? (booksRes.value.data.data?.books?.length || 0) : 'Error',
-        payments: paymentsRes.status === 'fulfilled' ? (paymentsRes.value.data.data?.payments?.length || 0) : 'Error'
+    const fetchStats = () => {
+      Promise.allSettled([
+        authApi.get('/auth/admin/users'),
+        bookApi.get('/books'),
+        paymentApi.get('/payments')
+      ]).then(([usersRes, booksRes, paymentsRes]) => {
+        setStats({
+          users: usersRes.status === 'fulfilled' ? usersRes.value.data.data.length : 'Error',
+          books: booksRes.status === 'fulfilled' ? (booksRes.value.data.data?.books?.length || 0) : 'Error',
+          payments: paymentsRes.status === 'fulfilled' ? (paymentsRes.value.data.data?.payments?.length || 0) : 'Error'
+        });
       });
-    });
+    };
+    fetchStats();
   }, []);
 
   return (

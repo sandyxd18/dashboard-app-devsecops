@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   
   const navigate = useNavigate();
-  const setAuth = useAdminStore((state) => state.login);
+  const { login } = useAdminStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,32 +21,23 @@ export default function LoginPage() {
 
     try {
       const response = await authApi.post('/auth/login', { username, password });
-      
-      // We must fetch the profile right after or assume Role from data if given
-      // Let's assume auth endpoint drops standard JWT and we can hit /auth/profile to verify role
-      const token = response.data?.data?.token;
-      
-      if (!token) throw new Error("Invalid response");
+      const { user, token } = response.data?.data || {};
 
-      // Verify role
-      const profileRes = await authApi.get('/auth/profile', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      const user = profileRes.data?.data;
-      if (user?.role !== 'admin') {
-        throw new Error("Access Denied: You do not have admin privileges.");
-      }
+      if (!user) throw new Error('Invalid response from server.');
+      if (user.role !== 'admin') throw new Error('Access Denied: You do not have admin privileges.');
 
-      setAuth(token, user);
+      // user in memory, token in memory (not localStorage) for injecting into other services
+      login(user, token);
       navigate('/');
-      
     } catch (err) {
-       setError(err.response?.data?.message || err.message || 'Failed to authenticate.');
+      setError(err.response?.data?.message || err.message || 'Failed to authenticate.');
     } finally {
       setLoading(false);
     }
   };
+
+
+
 
   return (
     <div className="flex flex-col items-center" style={{marginTop: '100px'}}>

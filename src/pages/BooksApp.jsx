@@ -99,7 +99,7 @@ export default function BooksApp() {
     <div className="card">
       <div className="flex justify-between items-center" style={{marginBottom: '20px'}}>
         <h3>Book Management</h3>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center" style={{ gap: '12px' }}>
           <input 
             type="text" 
             placeholder="Search book title..." 
@@ -107,6 +107,15 @@ export default function BooksApp() {
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', minWidth: '250px'}}
           />
+          <button
+            onClick={fetchBooks}
+            title="Refresh"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 10px', cursor: 'pointer', color: '#6b7280' }}
+            onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
+            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>refresh</span>
+          </button>
           <button className="btn btn-primary" onClick={() => setShowModal(true)}>Add Book</button>
         </div>
       </div>
