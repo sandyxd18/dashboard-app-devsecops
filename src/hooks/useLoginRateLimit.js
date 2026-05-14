@@ -70,6 +70,26 @@ export function useLoginRateLimit(storageKey = 'login_rate_limit') {
     return `${m}:${String(s).padStart(2, '0')}`;
   }, [state.permanent, remainingMs]);
 
+/**
+ * Cari threshold yang cocok dan terapkan ke state.
+ * Dipisah dari recordFailure untuk mengurangi cognitive complexity.
+ */
+function applyThreshold(currentState, newAttempts) {
+  for (let i = THRESHOLDS.length - 1; i >= 0; i--) {
+    if (newAttempts < THRESHOLDS[i].failCount) continue;
+    if (THRESHOLDS[i].durationMs === Infinity) {
+      return { ...currentState, attempts: newAttempts, permanent: true, lockedUntil: null };
+    }
+    return {
+      ...currentState,
+      attempts:    newAttempts,
+      permanent:   false,
+      lockedUntil: Date.now() + THRESHOLDS[i].durationMs,
+    };
+  }
+  return { ...currentState, attempts: newAttempts };
+}
+
   /**
    * Dipanggil setiap kali login gagal.
    * Mengembalikan { isLocked, isPermanent } setelah update.
@@ -79,23 +99,7 @@ export function useLoginRateLimit(storageKey = 'login_rate_limit') {
     if (current.permanent) return { isLocked: true, isPermanent: true };
 
     const newAttempts = current.attempts + 1;
-    let newState = { ...current, attempts: newAttempts };
-
-    // Cari threshold yang cocok (dari besar ke kecil)
-    for (let i = THRESHOLDS.length - 1; i >= 0; i--) {
-      if (newAttempts >= THRESHOLDS[i].failCount) {
-        if (THRESHOLDS[i].durationMs === Infinity) {
-          newState = { ...newState, permanent: true, lockedUntil: null };
-        } else {
-          newState = {
-            ...newState,
-            permanent:   false,
-            lockedUntil: Date.now() + THRESHOLDS[i].durationMs,
-          };
-        }
-        break;
-      }
-    }
+    const newState    = applyThreshold(current, newAttempts);
 
     saveStorageState(storageKey, newState);
     setState(newState);

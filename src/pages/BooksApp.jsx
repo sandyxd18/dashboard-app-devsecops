@@ -14,8 +14,6 @@ export default function BooksApp() {
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
-  const [hoverBookId, setHoverBookId] = useState(null);
-  
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [updateData, setUpdateData] = useState({ id: '', title: '', price: '', stock: '', description: '' });
 

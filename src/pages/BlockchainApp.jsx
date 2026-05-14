@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { blockApi } from '../services/api';
 import { ShieldCheck, ShieldAlert, Search, RotateCcw, Copy, Check } from 'lucide-react';
 
@@ -46,6 +47,9 @@ function CopyButton({ text }) {
     </button>
   );
 }
+CopyButton.propTypes = {
+  text: PropTypes.string.isRequired,
+};
 
 // ── Hash display row with full value + copy ────────────────────────────────────
 function HashRow({ label, value, highlight = false }) {
@@ -70,6 +74,30 @@ function HashRow({ label, value, highlight = false }) {
       </div>
     </div>
   );
+}
+HashRow.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  highlight: PropTypes.bool,
+};
+HashRow.defaultProps = {
+  value: null,
+  highlight: false,
+};
+
+// ── Status style helpers ──────────────────────────────────────────────────────
+function getStatusColor(status) {
+  if (status === 'secure')  return '#10b981';
+  if (status === 'missing') return '#f59e0b';
+  if (status)               return '#ef4444';
+  return '#6b7280';
+}
+
+function getStatusBg(status) {
+  if (status === 'secure')  return '#f0fdf4';
+  if (status === 'missing') return '#fffbeb';
+  if (status)               return '#fef2f2';
+  return '#f9fafb';
 }
 
 export default function BlockchainApp() {
@@ -144,19 +172,10 @@ export default function BlockchainApp() {
     setResult(null);
   };
 
-  const statusColor = result
-    ? result.status === 'secure'    ? '#10b981'
-    : result.status === 'missing'   ? '#f59e0b'
-    : '#ef4444'
-    : '#6b7280';
+  const statusColor = getStatusColor(result?.status);
+  const statusBg    = getStatusBg(result?.status);
+  const isVerified  = result?.status === 'secure';
 
-  const statusBg = result
-    ? result.status === 'secure'    ? '#f0fdf4'
-    : result.status === 'missing'   ? '#fffbeb'
-    : '#fef2f2'
-    : '#f9fafb';
-
-  const isVerified = result?.status === 'secure';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '760px', margin: '0 auto' }}>
