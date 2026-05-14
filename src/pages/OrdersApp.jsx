@@ -194,15 +194,15 @@ export default function OrdersApp() {
         }}
           onClick={closeModal}
           onKeyDown={(e) => { if (e.key === 'Escape') closeModal(); }}
-          role="presentation"
         >
-          <div style={{
+          <dialog style={{
             background: 'white', padding: '24px', borderRadius: '8px',
             width: '520px', maxWidth: '90%', boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            border: 'none', margin: 0,
           }}
+            open
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
             aria-modal="true"
           >
             <h4 style={{ marginBottom: '16px', borderBottom: '1px solid #eee', paddingBottom: '8px' }}>Order Details</h4>
@@ -266,7 +266,7 @@ export default function OrdersApp() {
             <div style={{ textAlign: 'right' }}>
               <button className="btn" style={{ backgroundColor: '#e5e7eb', color: 'black' }} onClick={closeModal}>Close</button>
             </div>
-          </div>
+          </dialog>
         </div>
       )}
 

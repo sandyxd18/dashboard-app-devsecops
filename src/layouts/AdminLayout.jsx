@@ -155,21 +155,19 @@ export default function AdminLayout() {
         <div style={{ padding: '16px 10px', borderTop: '1px solid #374151' }}>
 
           {/* Profile row — click opens modal, hover uses sidebar-link CSS highlight */}
-          <div
+          <button
             ref={profileRef}
             className="sidebar-link"
-            style={{ gap: '12px', cursor: 'pointer' }}
+            type="button"
+            style={{ gap: '12px', cursor: 'pointer', background: 'none', border: 'none', width: '100%', textAlign: 'left', padding: 0 }}
             onClick={handleProfileClick}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleProfileClick(); }}
-            role="button"
-            tabIndex={0}
           >
             <UserCircle size={18} color="#9ca3af" style={{ flexShrink: 0 }} />
             <div style={{ overflow: 'hidden', flex: 1 }}>
               <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{user.username}</div>
               <div style={{ fontSize: '10px', color: '#9ca3af', fontFamily: 'monospace', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{user.id}</div>
             </div>
-          </div>
+          </button>
 
           {/* Sign Out button */}
           <button
@@ -198,13 +196,12 @@ export default function AdminLayout() {
           style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.6)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={() => setShowProfileModal(false)}
           onKeyDown={(e) => { if (e.key === 'Escape') setShowProfileModal(false); }}
-          role="presentation"
         >
-          <div
-            style={{ position: 'relative', background: '#fff', borderRadius: '12px', padding: '28px 30px', width: '380px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.3)', animation: 'fadeInUp 0.15s ease-out' }}
+          <dialog
+            open
+            style={{ position: 'relative', background: '#fff', borderRadius: '12px', padding: '28px 30px', width: '380px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.3)', animation: 'fadeInUp 0.15s ease-out', border: 'none', margin: 0 }}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
             aria-modal="true"
           >
             {/* Header */}
@@ -233,7 +230,7 @@ export default function AdminLayout() {
             </button>
 
             <button onClick={() => setShowProfileModal(false)} style={{ position: 'absolute', top: '14px', right: '14px', background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: '20px', lineHeight: 1, padding: '4px' }}>✕</button>
-          </div>
+          </dialog>
         </div>
       )}
 
@@ -241,12 +238,12 @@ export default function AdminLayout() {
       {showChangePwStep === 'generate-key' && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.75)', zIndex: 1100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={() => { setShowChangePwStep(null); setGeneratedKey(null); }}
-          onKeyDown={(e) => { if (e.key === 'Escape') { setShowChangePwStep(null); setGeneratedKey(null); } }}
-          role="presentation">
-          <div style={{ background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)' }}
+          onKeyDown={(e) => { if (e.key === 'Escape') { setShowChangePwStep(null); setGeneratedKey(null); } }}>
+          <dialog
+            open
+            style={{ background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)', border: 'none', margin: 0 }}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
             aria-modal="true">
             <h3 style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px', color: '#111827' }}>
               <Key size={18} color={accent} /> Save Recovery Key First
@@ -254,7 +251,7 @@ export default function AdminLayout() {
             {!generatedKey ? (
               <>
                 <p style={{ fontSize: '13px', color: '#6b7280', marginBottom: '16px', lineHeight: 1.6 }}>
-                  You haven't generated a recovery key yet. You must save a recovery key before changing your password.
+                  You haven&apos;t generated a recovery key yet. You must save a recovery key before changing your password.
                 </p>
                 {keyGenError && <div style={{ color: '#c40000', fontSize: '12px', marginBottom: '10px', padding: '8px 10px', background: '#fef0ef', borderRadius: '4px' }}>{keyGenError}</div>}
                 <form onSubmit={handleGenerateKey} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -286,7 +283,7 @@ export default function AdminLayout() {
                 </button>
               </>
             )}
-          </div>
+          </dialog>
         </div>
       )}
 
@@ -294,12 +291,12 @@ export default function AdminLayout() {
       {showChangePwStep === 'change-pw' && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.75)', zIndex: 1100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={() => setShowChangePwStep(null)}
-          onKeyDown={(e) => { if (e.key === 'Escape') setShowChangePwStep(null); }}
-          role="presentation">
-          <div style={{ background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)' }}
+          onKeyDown={(e) => { if (e.key === 'Escape') setShowChangePwStep(null); }}>
+          <dialog
+            open
+            style={{ background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)', border: 'none', margin: 0 }}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
             aria-modal="true">
             <h3 style={{ fontSize: '16px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', color: '#111827' }}>
               <Lock size={18} color={accent} /> Change Password
@@ -324,9 +321,8 @@ export default function AdminLayout() {
                 </button>
               </div>
             </form>
-          </div>
+          </dialog>
         </div>
-      )}
 
       {/* Copy toast */}
       {copyToast && (

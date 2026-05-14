@@ -124,15 +124,13 @@ export default function UsersApp() {
           style={overlayStyle}
           onClick={() => { if (!deleting) setDeleteTarget(null); }}
           onKeyDown={(e) => { if (e.key === 'Escape' && !deleting) setDeleteTarget(null); }}
-          role="presentation"
         >
-          <div
-            style={modalStyle}
+          <dialog
+            open
+            style={{...modalStyle, border: 'none', margin: 0}}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
             aria-modal="true"
-            aria-labelledby="delete-modal-title"
           >
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', paddingBottom: '14px', borderBottom: '1px solid #e5e7eb' }}>
@@ -182,7 +180,7 @@ export default function UsersApp() {
               onClick={() => { if (!deleting) setDeleteTarget(null); }}
               style={{ position: 'absolute', top: '14px', right: '14px', background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: '20px', lineHeight: 1, padding: '4px' }}
             >✕</button>
-          </div>
+          </dialog>
         </div>
       )}
     </div>

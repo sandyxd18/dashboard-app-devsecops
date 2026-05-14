@@ -136,34 +136,29 @@ export default function BooksApp() {
             {books.filter(b => b.title.toLowerCase().includes(searchTerm.toLowerCase())).map(b => (
               <tr key={b.id}>
                 <td>
-                  <img 
-                    src={b.image_url || 'https://via.placeholder.com/50'} 
-                    alt={`Cover of ${b.title}`}
-                    style={{width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px', cursor: 'zoom-in', boxShadow: '0 1px 3px rgba(0,0,0,0.2)'}}
+                  <button
+                    type="button"
+                    style={{ background: 'none', border: 'none', padding: 0, cursor: 'zoom-in' }}
                     onClick={() => setPreviewImage(b.image_url || 'https://via.placeholder.com/500')}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setPreviewImage(b.image_url || 'https://via.placeholder.com/500'); }}
-                    role="button"
-                    tabIndex={0}
-                  />
+                  >
+                    <img
+                      src={b.image_url || 'https://via.placeholder.com/50'}
+                      alt={`Cover of ${b.title}`}
+                      style={{width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)'}}
+                    />
+                  </button>
                 </td>
                 <td style={{fontWeight: 500}}>
-                  <span 
-                    style={{cursor: 'pointer', color: '#3b82f6', textDecoration: 'underline'}} 
+                  <button
+                    type="button"
+                    style={{background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#3b82f6', textDecoration: 'underline', fontWeight: 500, fontSize: 'inherit'}}
                     onClick={() => {
                       setUpdateData({ id: b.id, title: b.title, price: b.price, stock: b.stock, description: b.description || '' });
                       setShowUpdateModal(true);
                     }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        setUpdateData({ id: b.id, title: b.title, price: b.price, stock: b.stock, description: b.description || '' });
-                        setShowUpdateModal(true);
-                      }
-                    }}
-                    role="button"
-                    tabIndex={0}
                   >
                     {b.title}
-                  </span>
+                  </button>
                 </td>
                 <td>{b.author}</td>
                 <td>{formatIDR(b.price)}</td>
@@ -287,13 +282,12 @@ export default function BooksApp() {
           className="modal-overlay"
           onClick={() => setPreviewImage(null)}
           onKeyDown={(e) => { if (e.key === 'Escape') setPreviewImage(null); }}
-          role="presentation"
         >
-          <div
-            style={{position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+          <dialog
+            open
+            style={{position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'none', background: 'transparent', padding: 0, margin: 0}}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
             aria-modal="true"
           >
             <img src={previewImage} alt="preview" style={{maxHeight: '85vh', maxWidth: '85vw', objectFit: 'contain', borderRadius: '8px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)'}} />
@@ -304,7 +298,7 @@ export default function BooksApp() {
             >
               X
             </button>
-          </div>
+          </dialog>
         </div>
       )}
     </div>
