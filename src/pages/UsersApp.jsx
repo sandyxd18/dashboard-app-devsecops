@@ -120,8 +120,20 @@ export default function UsersApp() {
 
       {/* ── Delete Confirmation Modal ── */}
       {deleteTarget && (
-        <div style={overlayStyle} onClick={() => { if (!deleting) setDeleteTarget(null); }}>
-          <div style={modalStyle} onClick={e => e.stopPropagation()}>
+        <div
+          style={overlayStyle}
+          onClick={() => { if (!deleting) setDeleteTarget(null); }}
+          onKeyDown={(e) => { if (e.key === 'Escape' && !deleting) setDeleteTarget(null); }}
+          role="presentation"
+        >
+          <div
+            style={modalStyle}
+            onClick={e => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-modal-title"
+          >
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', paddingBottom: '14px', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#fef2f2', border: '1px solid #fecaca', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

@@ -191,11 +191,20 @@ export default function OrdersApp() {
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
           backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }} onClick={closeModal}>
+        }}
+          onClick={closeModal}
+          onKeyDown={(e) => { if (e.key === 'Escape') closeModal(); }}
+          role="presentation"
+        >
           <div style={{
             background: 'white', padding: '24px', borderRadius: '8px',
             width: '520px', maxWidth: '90%', boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          }} onClick={e => e.stopPropagation()}>
+          }}
+            onClick={e => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
             <h4 style={{ marginBottom: '16px', borderBottom: '1px solid #eee', paddingBottom: '8px' }}>Order Details</h4>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
