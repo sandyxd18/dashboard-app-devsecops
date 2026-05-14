@@ -323,6 +323,7 @@ export default function AdminLayout() {
             </form>
           </dialog>
         </div>
+      )}
 
       {/* Copy toast */}
       {copyToast && (
