@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { bookApi } from '../services/api';
+import { RefreshCw } from 'lucide-react';
+
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500"%3E%3Crect width="500" height="500" fill="%23e5e7eb"/%3E%3Cpath d="M145 335h210V165H145v170Zm22-22 52-64 42 49 30-38 42 53H167Z" fill="%239ca3af"/%3E%3C/svg%3E';
 
 export default function BooksApp() {
   const [books, setBooks] = useState([]);
@@ -112,7 +115,7 @@ export default function BooksApp() {
             onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
             onMouseLeave={e => e.currentTarget.style.background = 'none'}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>refresh</span>
+            <RefreshCw size={20} aria-hidden="true" />
           </button>
           <button className="btn btn-primary" onClick={() => setShowModal(true)}>Add Book</button>
         </div>
@@ -137,10 +140,10 @@ export default function BooksApp() {
                   <button
                     type="button"
                     style={{ background: 'none', border: 'none', padding: 0, cursor: 'zoom-in' }}
-                    onClick={() => setPreviewImage(b.image_url || 'https://via.placeholder.com/500')}
+                    onClick={() => setPreviewImage(b.image_url || PLACEHOLDER_IMAGE)}
                   >
                     <img
-                      src={b.image_url || 'https://via.placeholder.com/50'}
+                      src={b.image_url || PLACEHOLDER_IMAGE}
                       alt={`Cover of ${b.title}`}
                       style={{width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)'}}
                     />

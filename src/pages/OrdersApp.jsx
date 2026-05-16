@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { paymentApi, orderApi, blockApi, authApi } from '../services/api';
+import { RefreshCw } from 'lucide-react';
 
 const formatIDR = (n) =>
   new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n);
@@ -131,7 +132,7 @@ export default function OrdersApp() {
             onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
             onMouseLeave={e => e.currentTarget.style.background = 'none'}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>refresh</span>
+            <RefreshCw size={20} aria-hidden="true" />
           </button>
         </div>
       </div>
