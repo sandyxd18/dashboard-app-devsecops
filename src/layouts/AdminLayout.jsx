@@ -241,7 +241,7 @@ export default function AdminLayout() {
           onKeyDown={(e) => { if (e.key === 'Escape') { setShowChangePwStep(null); setGeneratedKey(null); } }}>
           <dialog
             open
-            style={{ background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)', border: 'none', margin: 0 }}
+            style={{ position: 'relative', background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)', border: 'none', margin: 0 }}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
             aria-modal="true">
@@ -294,7 +294,7 @@ export default function AdminLayout() {
           onKeyDown={(e) => { if (e.key === 'Escape') setShowChangePwStep(null); }}>
           <dialog
             open
-            style={{ background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)', border: 'none', margin: 0 }}
+            style={{ position: 'relative', background: '#fff', borderRadius: '10px', padding: '28px 30px', width: '420px', maxWidth: '90vw', boxShadow: '0 20px 50px rgba(0,0,0,0.35)', border: 'none', margin: 0 }}
             onClick={e => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
             aria-modal="true">

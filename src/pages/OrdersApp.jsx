@@ -197,7 +197,7 @@ export default function OrdersApp() {
           onKeyDown={(e) => { if (e.key === 'Escape') closeModal(); }}
         >
           <dialog style={{
-            background: 'white', padding: '24px', borderRadius: '8px',
+            position: 'relative', background: 'white', padding: '24px', borderRadius: '8px',
             width: '520px', maxWidth: '90%', boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
             border: 'none', margin: 0,
           }}
